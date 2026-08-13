@@ -34,16 +34,32 @@ exports.register = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Email is already registered' });
     }
 
+    const totalUsers = await User.countDocuments();
+    // If first user registering, automatically grant Admin role
+    const assignedRole = totalUsers === 0 ? 'Admin' : (role || 'Employee');
+
     user = await User.create({
       name,
       email,
       password,
-      role: role || 'Employee',
+      role: assignedRole,
       department: department || 'Inventory Operations'
     });
 
-    await logActivity(user, 'User Registration', 'Authentication', `New account created: ${user.email}`, req);
+    await logActivity(user, 'User Registration', 'Authentication', `New account created: ${user.email} (${assignedRole})`, req);
     sendTokenResponse(user, 201, res, 'Registration successful');
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.clearAllUsers = async (req, res, next) => {
+  try {
+    await User.deleteMany();
+    res.status(200).json({
+      success: true,
+      message: 'All old user accounts deleted successfully. You can now register a fresh Admin account.'
+    });
   } catch (err) {
     next(err);
   }
