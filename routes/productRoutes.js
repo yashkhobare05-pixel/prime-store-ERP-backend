@@ -4,11 +4,15 @@ const {
   getProductById,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  seedProducts
 } = require('../controllers/productController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 const router = express.Router();
+
+router.get('/seed', seedProducts);
+router.post('/seed', seedProducts);
 
 router.route('/')
   .get(protect, getProducts)

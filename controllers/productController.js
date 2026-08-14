@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const logActivity = require('../utils/activityLogger');
+const seedDatabase = require('../utils/seedData');
 
 exports.getProducts = async (req, res, next) => {
   try {
@@ -104,6 +105,19 @@ exports.deleteProduct = async (req, res, next) => {
     await product.deleteOne();
     await logActivity(req.user, 'Delete Product', 'Products', `Deleted product ${product.name}`, req);
     res.status(200).json({ success: true, message: 'Product deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.seedProducts = async (req, res, next) => {
+  try {
+    const result = await seedDatabase();
+    res.status(200).json({
+      success: true,
+      message: `Successfully seeded ${result.productCount} products into database.`,
+      productCount: result.productCount
+    });
   } catch (err) {
     next(err);
   }

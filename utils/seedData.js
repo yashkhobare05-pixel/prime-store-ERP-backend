@@ -34,12 +34,12 @@ const seedDatabase = async () => {
 
     // 1. Create Default Users
     const admin = await User.create({
-      name: 'Dr. Sarah Connor (Admin)',
-      email: 'admin@inventory.ai',
+      name: 'Yash Khobare (Admin)',
+      email: 'yashkhobare05@gmail.com',
       password: 'adminpassword123',
       role: 'Admin',
       department: 'Executive Management',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=250&q=80'
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80'
     });
 
     const manager = await User.create({
@@ -66,6 +66,7 @@ const seedDatabase = async () => {
     const catElectronics = await Category.create({ name: 'Electronics & Computing', code: 'CAT-ELEC', description: 'Computers, laptops, and smart gadgets' });
     const catPeripherals = await Category.create({ name: 'Peripherals & Accessories', code: 'CAT-PERI', description: 'Keyboards, mice, monitors, and audio' });
     const catNetworking = await Category.create({ name: 'Networking & Servers', code: 'CAT-NET', description: 'Routers, switches, and rack hardware' });
+    const catStorage = await Category.create({ name: 'Storage & Memory', code: 'CAT-STOR', description: 'SSDs, HDDs, RAM, and external drives' });
 
     // 3. Create Warehouses
     const whAlpha = await Warehouse.create({
@@ -117,16 +118,7 @@ const seedDatabase = async () => {
       totalSpent: 48500
     });
 
-    const cust2 = await Customer.create({
-      name: 'Quantum Cybernetics',
-      email: 'tech@quantumcyber.io',
-      phone: '+1-415-555-8822',
-      loyaltyPoints: 3400,
-      tier: 'Platinum',
-      totalSpent: 112000
-    });
-
-    // 6. Create Products
+    // 6. Create Products (10 High-Quality Catalog Items)
     const productsData = [
       {
         name: 'HP Pavilion Ultra Laptop 16"',
@@ -143,6 +135,25 @@ const seedDatabase = async () => {
         minStockLevel: 20,
         maxStockLevel: 150,
         reorderPoint: 25,
+        unit: 'PCS',
+        image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80',
+        movementVelocity: 'Fast Moving'
+      },
+      {
+        name: 'Apple MacBook Pro 14" M3 Max',
+        sku: 'MBP-14-M3MAX',
+        barcode: '8901234567896',
+        qrCode: 'QR-MBP-14-M3MAX-2026',
+        category: catElectronics._id,
+        supplier: supTech._id,
+        warehouse: whAlpha._id,
+        description: 'Liquid Retina XDR, 36GB RAM, 1TB SSD Space Black',
+        costPrice: 1600,
+        sellingPrice: 1999,
+        stockQuantity: 28,
+        minStockLevel: 10,
+        maxStockLevel: 80,
+        reorderPoint: 15,
         unit: 'PCS',
         image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80',
         movementVelocity: 'Fast Moving'
@@ -205,6 +216,63 @@ const seedDatabase = async () => {
         movementVelocity: 'Moderate Moving'
       },
       {
+        name: 'Keychron K2 Mechanical Keyboard',
+        sku: 'KEYCH-K2-RGB',
+        barcode: '8901234567897',
+        qrCode: 'QR-KEYCH-K2-RGB-2026',
+        category: catPeripherals._id,
+        supplier: supTech._id,
+        warehouse: whAlpha._id,
+        description: 'Wireless Bluetooth RGB Backlit Gateron Brown Switches',
+        costPrice: 55,
+        sellingPrice: 89,
+        stockQuantity: 92,
+        minStockLevel: 15,
+        maxStockLevel: 200,
+        reorderPoint: 25,
+        unit: 'PCS',
+        image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=400&q=80',
+        movementVelocity: 'Fast Moving'
+      },
+      {
+        name: 'Samsung T7 2TB External Portable SSD',
+        sku: 'SAMS-T7-2TB',
+        barcode: '8901234567898',
+        qrCode: 'QR-SAMS-T7-2TB-2026',
+        category: catStorage._id,
+        supplier: supTech._id,
+        warehouse: whBeta._id,
+        description: 'USB 3.2 Gen 2 up to 1050MB/s Rugged Aluminum Shell',
+        costPrice: 110,
+        sellingPrice: 159,
+        stockQuantity: 45,
+        minStockLevel: 12,
+        maxStockLevel: 120,
+        reorderPoint: 20,
+        unit: 'PCS',
+        image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=400&q=80',
+        movementVelocity: 'Fast Moving'
+      },
+      {
+        name: 'Anker PowerConf Dual-Port USB-C Hub',
+        sku: 'ANKER-HUB-8IN1',
+        barcode: '8901234567899',
+        qrCode: 'QR-ANKER-HUB-8IN1-2026',
+        category: catPeripherals._id,
+        supplier: supTech._id,
+        warehouse: whAlpha._id,
+        description: '8-in-1 4K HDMI, 100W Power Delivery, SD Card Reader',
+        costPrice: 35,
+        sellingPrice: 65,
+        stockQuantity: 115,
+        minStockLevel: 20,
+        maxStockLevel: 250,
+        reorderPoint: 35,
+        unit: 'PCS',
+        image: 'https://images.unsplash.com/photo-1609592424083-d5672d2427a1?auto=format&fit=crop&w=400&q=80',
+        movementVelocity: 'Fast Moving'
+      },
+      {
         name: 'Enterprise 24-Port Gigabit PoE Router',
         sku: 'NET-POE-24P',
         barcode: '8901234567895',
@@ -222,6 +290,25 @@ const seedDatabase = async () => {
         unit: 'PCS',
         image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&q=80',
         movementVelocity: 'Slow Moving'
+      },
+      {
+        name: 'Asus ROG Wi-Fi 7 Gaming Router',
+        sku: 'ASUS-ROG-W7',
+        barcode: '8901234567900',
+        qrCode: 'QR-ASUS-ROG-W7-2026',
+        category: catNetworking._id,
+        supplier: supTech._id,
+        warehouse: whBeta._id,
+        description: 'Tri-band Wi-Fi 7 19Gbps ultra-low latency mesh support',
+        costPrice: 280,
+        sellingPrice: 429,
+        stockQuantity: 5, // Out of stock / Low stock
+        minStockLevel: 10,
+        maxStockLevel: 60,
+        reorderPoint: 12,
+        unit: 'PCS',
+        image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&q=80',
+        movementVelocity: 'Moderate Moving'
       }
     ];
 
@@ -243,13 +330,6 @@ const seedDatabase = async () => {
         type: 'AI Insight',
         priority: 'Critical',
         relatedProduct: createdProducts[0]._id
-      },
-      {
-        title: 'Overstock Risk Alert',
-        message: 'Enterprise 24-Port Switch inventory exceeds max stock level by 100 units.',
-        type: 'Reorder Alert',
-        priority: 'Medium',
-        relatedProduct: createdProducts[4]._id
       }
     ]);
 
@@ -258,19 +338,23 @@ const seedDatabase = async () => {
       {
         userName: admin.name,
         userRole: admin.role,
-        action: 'System Initialization',
+        action: 'System Initialization & Seeding',
         module: 'Database',
-        details: 'Seeded initial products, warehouses, and AI prediction models.',
+        details: `Seeded ${createdProducts.length} products, categories, warehouses, and users.`,
         ipAddress: '127.0.0.1'
       }
     ]);
 
     console.log('Database Seeding Completed Successfully!');
-    process.exit(0);
+    return { success: true, productCount: createdProducts.length };
   } catch (err) {
     console.error('Seeding Error:', err);
-    process.exit(1);
+    throw err;
   }
 };
 
-seedDatabase();
+module.exports = seedDatabase;
+
+if (require.main === module) {
+  seedDatabase().then(() => process.exit(0)).catch(() => process.exit(1));
+}
